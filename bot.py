@@ -1,7 +1,8 @@
 import requests
 import time
 from datetime import datetime
-TOKEN = ""
+import os
+TOKEN = os.environ.get("TOKEN")
 CHANNEL_ID = "@ite_archive"
 
 def get_rates():
@@ -42,4 +43,5 @@ def main():
         time.sleep(6 * 60 * 60)
 
 if __name__ == "__main__":
+
     main()
