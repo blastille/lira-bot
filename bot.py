@@ -3,11 +3,16 @@ import time
 from datetime import datetime
 import os
 TOKEN = os.environ.get("TOKEN")
-CHANNEL_ID = "@ite_archive"
+CHANNEL_ID = "@syp_lira"
 
 def get_rates():
     url = "https://sse.sp-today.com/snapshot"
-    response = requests.get(url)
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+    response = requests.get(url, headers=headers)
+    print(response.status_code)
+    print(response.text[:200])
     data = response.json()
     return data["data"]["currencies"]
 
@@ -45,3 +50,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
