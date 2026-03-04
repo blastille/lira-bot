@@ -1,18 +1,13 @@
-import requests
+import cloudscraper
 import time
 from datetime import datetime
 import os
 TOKEN = os.environ.get("TOKEN")
-CHANNEL_ID = "@syp_lira"
+CHANNEL_ID = os.environ.get("CHANNEL_ID")
 
 def get_rates():
-    url = "https://sse.sp-today.com/snapshot"
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
-    response = requests.get(url, headers=headers)
-    print(response.status_code)
-    print(response.text[:200])
+    scraper = cloudscraper.create_scraper()
+    response = scraper.get("https://sse.sp-today.com/snapshot")
     data = response.json()
     return data["data"]["currencies"]
 
