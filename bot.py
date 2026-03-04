@@ -32,14 +32,14 @@ def main():
         try_lira = rates["TRY:damascus"]
         date = datetime.now().strftime("%d/%m/%Y")
         message = (
-            f"💱 {date} أسعار الصرف في دمشق\n"
+            f" {date}      أسعار الصرف في دمشق\n"
             "━━━━━━━━━━━━━━━\n"
             f"الدولار\n"
-            f"   شراء: {usd['buy']} | بيع: {usd['sell']}\n\n"
+            f"   شراء: {usd['buy']} | مبيع: {usd['sell']}\n\n"
             f"اليورو\n"
-            f"   شراء: {eur['buy']} | بيع: {eur['sell']}\n\n"
+            f"   شراء: {eur['buy']} | مبيع: {eur['sell']}\n\n"
             f"الليرة التركية\n"
-            f"   شراء: {try_lira['buy']} | بيع: {try_lira['sell']}\n"
+            f"   شراء: {try_lira['buy']} | مبيع: {try_lira['sell']}\n"
             "━━━━━━━━━━━━━━━"
         )
 
@@ -50,4 +50,5 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
