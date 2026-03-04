@@ -41,11 +41,12 @@ def main():
 
         send_message(message)
         print("تم الإرسال، انتظار 6 ساعات...")
-        time.sleep(6 * 60 * 60)
+        time.sleep(3 * 60 * 60)
 
 if __name__ == "__main__":
 
     main()
+
 
 
 
