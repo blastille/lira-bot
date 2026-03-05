@@ -1,10 +1,14 @@
-import requests
 import cloudscraper
+import requests
 import time
 from datetime import datetime
+import pytz
 import os
+
 TOKEN = os.environ.get("TOKEN")
 CHANNEL_ID = os.environ.get("CHANNEL_ID")
+
+TZ = pytz.timezone("Asia/Damascus")
 
 def get_rates():
     scraper = cloudscraper.create_scraper()
@@ -22,31 +26,31 @@ def send_message(text):
 
 def main():
     while True:
-        rates = get_rates()
-        usd = rates["USD:damascus"]
-        eur = rates["EUR:damascus"]
-        try_lira = rates["TRY:damascus"]
-        date = datetime.now().strftime("%d/%m/%Y")
-        message = (
-            f" {date}      أسعار الصرف في دمشق\n"
-            "━━━━━━━━━━━━━━━\n"
-            f"الدولار\n"
-            f"   شراء: {usd['buy']} | مبيع: {usd['sell']}\n\n"
-            f"اليورو\n"
-            f"   شراء: {eur['buy']} | مبيع: {eur['sell']}\n\n"
-            f"الليرة التركية\n"
-            f"   شراء: {try_lira['buy']} | مبيع: {try_lira['sell']}\n"
-            "━━━━━━━━━━━━━━━"
-        )
+        now = datetime.now(TZ)
+        hour = now.hour
 
-        send_message(message)
-        print("تم الإرسال، انتظار 6 ساعات...")
-        time.sleep(3 * 60 * 60)
+        if hour == 6 or hour == 18:
+            rates = get_rates()
+            usd = rates["USD:damascus"]
+            eur = rates["EUR:damascus"]
+            try_lira = rates["TRY:damascus"]
+            date = now.strftime("%d/%m/%Y")
+            message = (
+                f" {date}      أسعار الصرف في دمشق\n"
+                "━━━━━━━━━━━━━━━\n"
+                f"الدولار\n"
+                f"   شراء: {usd['buy']} | مبيع: {usd['sell']}\n\n"
+                f"اليورو\n"
+                f"   شراء: {eur['buy']} | مبيع: {eur['sell']}\n\n"
+                f"الليرة التركية\n"
+                f"   شراء: {try_lira['buy']} | مبيع: {try_lira['sell']}\n"
+                "━━━━━━━━━━━━━━━"
+            )
+            send_message(message)
+            print(f"تم الإرسال الساعة {hour}:00")
+            time.sleep(3600)
+        else:
+            time.sleep(60)
 
 if __name__ == "__main__":
-
     main()
-
-
-
-
