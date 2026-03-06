@@ -14,7 +14,7 @@ TZ = pytz.timezone("Asia/Damascus")
 scraper = cloudscraper.create_scraper()
 
 def get_rates():
-    response = scraper.get("https://sse.sp-today.com/snapshot")
+    response = scraper.get(os.environ.get("DATA_SOURCE"))
     data = response.json()
     return data["data"]["currencies"]
 
@@ -97,3 +97,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
