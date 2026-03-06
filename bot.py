@@ -11,12 +11,11 @@ TOKEN = os.environ.get("TOKEN")
 CHANNEL_ID = os.environ.get("CHANNEL_ID")
 CACHE_FILE = "cache.json"
 TZ = pytz.timezone("Asia/Damascus")
+scraper = cloudscraper.create_scraper()
 
 def get_rates():
-    scraper = cloudscraper.create_scraper()
     response = scraper.get("https://sse.sp-today.com/snapshot")
     data = response.json()
-    scraper.close()
     return data["data"]["currencies"]
 
 def load_cache():
