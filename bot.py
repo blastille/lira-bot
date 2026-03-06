@@ -9,13 +9,12 @@ import pytz
 
 TOKEN = os.environ.get("TOKEN")
 CHANNEL_ID = os.environ.get("CHANNEL_ID")
-DATA_SOURCE = os.environ.get("DATA_SOURCE")
 CACHE_FILE = "cache.json"
 TZ = pytz.timezone("Asia/Damascus")
 scraper = cloudscraper.create_scraper()
 
 def get_rates():
-    response = scraper.get(DATA_SOURCE)
+    response = scraper.get("https://sse.sp-today.com/snapshot")
     data = response.json()
     return data["data"]["currencies"]
 
@@ -98,4 +97,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
