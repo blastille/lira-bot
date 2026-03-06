@@ -3,6 +3,7 @@ import requests
 import time
 import json
 import os
+import gc
 from datetime import datetime
 import pytz
 
@@ -15,6 +16,7 @@ def get_rates():
     scraper = cloudscraper.create_scraper()
     response = scraper.get("https://sse.sp-today.com/snapshot")
     data = response.json()
+    scraper.close()
     return data["data"]["currencies"]
 
 def load_cache():
@@ -84,13 +86,14 @@ def main():
 
                 send_message(message)
                 save_cache(rates)
-                print(f"تغيير بالأسعار — تم الإرسال {date}")
+                print(f"تم الإرسال {date}")
             else:
-                print("لا تغيير بالأسعار")
+                print("لا تغيير")
 
         except Exception as e:
             print(f"خطأ: {e}")
 
+        gc.collect()
         time.sleep(60)
 
 if __name__ == "__main__":
